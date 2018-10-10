@@ -22,27 +22,18 @@ public class Range {
         return to;
     }
 
-   /* public void setFrom(double from) {
-        this.from = from;
-    }
-
-    public void setTo(double to) {
-        this.to = to;
-    }
-
     public double getLength() {
         return to - from;
     }
 
     public boolean isInside(double number) {
         return number >= from && number <= to;
-    }*/
+    }
 
     public static Range getIntersection(Range range1, Range range2) {
         if (range1.to < range2.from || range1.from > range2.to) {
             return null;
         }
-
         return new Range(Math.max(range1.from, range2.from), Math.min(range1.to, range2.to));
     }
 
@@ -50,43 +41,24 @@ public class Range {
         if (range1.to < range2.from || range1.from > range2.to) {
             return new Range[]{new Range(range1.from, range1.to), new Range(range2.from, range2.to)};
         }
-
         return new Range[]{new Range(Math.min(range1.from, range2.from), Math.max(range1.to, range2.to))};
     }
 
-
-
-
-
-
-
-
-
-  /*  public static void main(String[] args) {
-        Range range1 = new Range(3, 10);
-
-        double length = range1.getLength();
-        System.out.println("Длина первого диапазона равна " + length);
-
-        int number = 5;
-        if (range1.isInside(number)) {
-            System.out.println("Число " + number + " принадлежит первому числовому диапазону.");
-        } else {
-            System.out.println("Число " + number + " не принадлежит первому числовому диапазону.");
+    public static Range[] getDifference(Range range1, Range range2) {
+        if (range2.from <= range1.from && range2.to > range1.from) {
+            if (range2.to < range1.to) {
+                return new Range[]{new Range(range2.to, range1.to)};
+            }
+            return new Range[]{null};
         }
 
-        Range range2 = new Range(1, 2);
-
-        range2.setFrom(6);
-        range2.setTo(8);
-
-        System.out.println("Нижняя граница второго диапазона " + range2.getFrom());
-        System.out.println("Верхняя граница второго диапазона " + range2.getTo());
-
-        if (range2.isInside(number)) {
-            System.out.println("Число " + number + " принадлежит второму числовому диапазону.");
-        } else {
-            System.out.println("Число " + number + " не принадлежит второму числовому диапазону.");
+        if (range1.from < range2.from && range2.from < range1.to) {
+            if (range1.to <= range2.to) {
+                return new Range[]{new Range(range1.from, range2.from)};
+            }
+            return new Range[]{new Range(range1.from, range2.from), new Range(range2.to, range1.to)};
         }
-    }*/
+
+        return new Range[]{range1};
+    }
 }

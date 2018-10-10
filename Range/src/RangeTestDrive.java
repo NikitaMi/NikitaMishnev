@@ -2,39 +2,29 @@ import ru.nikita.mishnev.range.Range;
 
 public class RangeTestDrive {
     public static void main(String[] args) {
-        Range range1 = new Range(5, 9);
-        Range range2 = new Range(2, 7);
+        Range range1 = new Range(2, 9);
 
-        Range[] ranges = Range.getUnion(range1, range2);
-
-        System.out.println("from = " + ranges[0].getFrom());
-        System.out.println("to = " + ranges[0].getTo());
+        System.out.println("Длина интервала range1 = " + range1.getLength());
         System.out.println();
-        //System.out.println("from = " + ranges[1].getFrom());
-        //System.out.println("to = " + ranges[1].getTo());
 
+        int number = 5;
+        if (range1.isInside(number)) {
+            System.out.println("Число " + number + " принадлежит диапазону range1");
+            System.out.println();
+        }
 
+        Range range2 = new Range(4, 12);
+        Range intersection = Range.getIntersection(range1, range2);
 
+        if (intersection != null) {
+            System.out.println("Границы пересечения интервалов : " + intersection.getFrom() + " и " + intersection.getTo());
+            System.out.println();
+        }
 
+        Range[] union = Range.getUnion(range1, range2);
+        System.out.println("Объединение интервалов : " + union[0].getFrom() + " и " + union[0].getTo());
 
-
-
-
-
-
-
-
-
-
-
-
-        //Range range3 = Range.getIntersection(range1, range2);
-
-        /*if (range3 != null) {
-            System.out.println("from = " + range3.getFrom());
-            System.out.println("to = " + range3.getTo());
-        } else {
-            System.out.println("Пересечения нет.");
-        }*/
+        Range[] difference = Range.getDifference(range1, range2);
+        System.out.println("Разность интервалов : " + difference[0].getFrom() + " и " + difference[0].getTo());
     }
 }
