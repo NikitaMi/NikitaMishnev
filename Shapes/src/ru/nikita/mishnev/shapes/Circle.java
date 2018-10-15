@@ -2,31 +2,32 @@ package ru.nikita.mishnev.shapes;
 
 import ru.nikita.mishnev.shapes.Interfaces.Shape;
 
-public class Square implements Shape {
-    private double side;
+public class Circle implements Shape {
+    private double radius;
+    private double diameter = radius * 2;
 
-    public Square(double side) {
-        this.side = side;
+    public Circle(double radius) {
+        this.radius = radius;
     }
+
 
     @Override
     public double getWidth() {
-        return side;
+        return diameter;
     }
 
     @Override
     public double getHeight() {
-        return side;
+        return diameter;
     }
 
     @Override
     public double getArea() {
-        return Math.pow(side, 2);
+        return Math.PI * Math.pow(radius, 2);
     }
 
     @Override
     public double getPerimeter() {
-        int sidesCount = 4;
-        return side * sidesCount;
+        return 2 * Math.PI * radius;
     }
 }
