@@ -1,6 +1,8 @@
 package ru.nikita.mishnev.shapes;
 
-import ru.nikita.mishnev.shapes.Interfaces.Shape;
+import ru.nikita.mishnev.shapes.interfaces.Shape;
+
+import java.util.Objects;
 
 public class Triangle implements Shape {
     private double x1;
@@ -54,5 +56,29 @@ public class Triangle implements Shape {
     public double getPerimeter() {
         double[] triangleSides = getTriangleSides();
         return triangleSides[0] + triangleSides[1] + triangleSides[2];
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Треугольник.%nПлощадь = %.2f%nПериметр = %.2f", getArea(), getPerimeter());
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+
+        if (object instanceof Triangle) {
+            Triangle triangle = (Triangle) object;
+
+            return (this.x1 == triangle.x1 && this.x2 == triangle.x2 && this.x3 == triangle.x3);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x1, y1, x2, y2, x3, y3);
     }
 }

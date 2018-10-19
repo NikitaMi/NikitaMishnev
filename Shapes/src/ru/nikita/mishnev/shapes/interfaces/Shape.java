@@ -1,4 +1,4 @@
-package ru.nikita.mishnev.shapes.Interfaces;
+package ru.nikita.mishnev.shapes.interfaces;
 
 public interface Shape {
     double getWidth();
