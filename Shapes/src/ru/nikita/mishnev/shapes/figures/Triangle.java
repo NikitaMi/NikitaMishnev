@@ -1,8 +1,6 @@
-package ru.nikita.mishnev.shapes;
+package ru.nikita.mishnev.shapes.figures;
 
 import ru.nikita.mishnev.shapes.interfaces.Shape;
-
-import java.util.Objects;
 
 public class Triangle implements Shape {
     private double x1;
@@ -25,7 +23,6 @@ public class Triangle implements Shape {
         this.y3 = y3;
     }
 
-
     @Override
     public double getWidth() {
         return Math.max(Math.max(x1, x2), x3) - Math.min(Math.min(x1, x2), x3);
@@ -36,11 +33,14 @@ public class Triangle implements Shape {
         return Math.max(Math.max(y1, y2), y3) - Math.min(Math.min(y1, y2), y3);
     }
 
-    private double[] getTriangleSides() {
-        double sideAB = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-        double sideBC = Math.sqrt(Math.pow((x3 - x2), 2) + Math.pow((y3 - y2), 2));
-        double sideCA = Math.sqrt(Math.pow((x1 - x3), 2) + Math.pow((y1 - y3), 2));
+    private double getSegmentLength(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+    }
 
+    private double[] getTriangleSides() {
+        double sideAB = getSegmentLength(x1, y1, x2, y2);
+        double sideBC = getSegmentLength(x2, y2, x3, y3);
+        double sideCA = getSegmentLength(x3, y3, x1, y1);
         return new double[]{sideAB, sideBC, sideCA};
     }
 
@@ -60,25 +60,33 @@ public class Triangle implements Shape {
 
     @Override
     public String toString() {
-        return String.format("Треугольник.%nПлощадь = %.2f%nПериметр = %.2f", getArea(), getPerimeter());
+        return String.format("Triangle.%nx1 = %.2f y1 = %.2f%nx2 = %.2f y2 = %.2f%nx3 = %.2f y3 = %.2f", x1, y1, x2, y2, x3, y3);
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null) {
+        if (object == this) {
+            return true;
+        }
+
+        if (object == null || object.getClass() != this.getClass()) {
             return false;
         }
 
-        if (object instanceof Triangle) {
-            Triangle triangle = (Triangle) object;
-
-            return (this.x1 == triangle.x1 && this.x2 == triangle.x2 && this.x3 == triangle.x3);
-        }
-        return false;
+        Triangle triangle = (Triangle) object;
+        return (triangle.x1 == this.x1 && triangle.y1 == this.y1 && triangle.x2 == this.x2 && triangle.y2 == this.y2 && triangle.x3 == this.x3 && triangle.y3 == this.y3);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x1, y1, x2, y2, x3, y3);
+        final int prime = 37;
+        int hash = 1;
+        hash = prime * hash + Double.hashCode(x1);
+        hash = prime * hash + Double.hashCode(y1);
+        hash = prime * hash + Double.hashCode(x2);
+        hash = prime * hash + Double.hashCode(y2);
+        hash = prime * hash + Double.hashCode(x3);
+        hash = prime * hash + Double.hashCode(y3);
+        return hash;
     }
 }

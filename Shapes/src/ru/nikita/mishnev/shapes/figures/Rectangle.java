@@ -1,8 +1,6 @@
-package ru.nikita.mishnev.shapes;
+package ru.nikita.mishnev.shapes.figures;
 
 import ru.nikita.mishnev.shapes.interfaces.Shape;
-
-import java.util.Objects;
 
 public class Rectangle implements Shape {
     private double width;
@@ -35,25 +33,29 @@ public class Rectangle implements Shape {
 
     @Override
     public String toString() {
-        return String.format("Прямоугольник.%nПлощадь = %.2f%nШирина = %.2f%nВысота = %.2f%nПериметр = %.2f", getArea(), getWidth(), getHeight(), getPerimeter());
+        return String.format("Rectangle.%nWidth = %.2f%nHeight = %.2f", getWidth(), getHeight());
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null) {
+        if (object == this) {
+            return true;
+        }
+
+        if (object == null || object.getClass() != this.getClass()) {
             return false;
         }
 
-        if (object instanceof Rectangle) {
-            Rectangle rectangle = (Rectangle) object;
-
-            return this.width == rectangle.width && this.height == rectangle.height;
-        }
-        return false;
+        Rectangle rectangle = (Rectangle) object;
+        return (rectangle.height == this.height && rectangle.width == this.width);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(width, height);
+        final int prime = 37;
+        int hash = 1;
+        hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
+        return hash;
     }
 }

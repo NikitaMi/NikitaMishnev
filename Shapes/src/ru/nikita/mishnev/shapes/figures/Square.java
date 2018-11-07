@@ -1,8 +1,6 @@
-package ru.nikita.mishnev.shapes;
+package ru.nikita.mishnev.shapes.figures;
 
 import ru.nikita.mishnev.shapes.interfaces.Shape;
-
-import java.util.Objects;
 
 public class Square implements Shape {
     private double side;
@@ -34,25 +32,28 @@ public class Square implements Shape {
 
     @Override
     public String toString() {
-        return String.format("Квадрат.%nПлощадь = %.2f%nСторона = %.2f%nПериметр = %.2f", getArea(), getHeight(), getPerimeter());
+        return String.format("Square.%nSide = %.2f", side);
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null) {
+        if (object == this) {
+            return true;
+        }
+
+        if (object == null || object.getClass() != this.getClass()) {
             return false;
         }
 
-        if (object instanceof Square) {
-            Square square = (Square) object;
-
-            return this.side == square.side;
-        }
-        return false;
+        Square square = (Square) object;
+        return (square.side == this.side);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(side);
+        final int prime = 37;
+        int hash = 1;
+        hash = prime * hash + Double.hashCode(side);
+        return hash;
     }
 }

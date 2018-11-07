@@ -1,27 +1,22 @@
-package ru.nikita.mishnev.shapes;
+package ru.nikita.mishnev.shapes.figures;
 
 import ru.nikita.mishnev.shapes.interfaces.Shape;
 
-import java.util.Objects;
-
 public class Circle implements Shape {
     private double radius;
-    private double diameter;
 
     public Circle(double radius) {
         this.radius = radius;
-        this.diameter = radius * 2;
     }
-
 
     @Override
     public double getWidth() {
-        return this.diameter;
+        return radius * 2;
     }
 
     @Override
     public double getHeight() {
-        return this.diameter;
+        return radius * 2;
     }
 
     @Override
@@ -36,25 +31,29 @@ public class Circle implements Shape {
 
     @Override
     public String toString() {
-        return String.format("Круг.%nРадиус = %.2f%nПлощадь = %.2f%nДлина круга = %.2f", getHeight() / 2, getArea(), getPerimeter());
+        return String.format("Circle.%nRadius = %.2f", radius);
     }
 
     @Override
     public boolean equals(Object object) {
-        if (object == null) {
+        if (object == this) {
+            return true;
+        }
+
+        if (object == null || object.getClass() != this.getClass()) {
             return false;
         }
 
-        if (object instanceof Circle) {
-            Circle circle = (Circle) object;
+        Circle circle = (Circle) object;
 
-            return this.radius == circle.radius;
-        }
-        return false;
+        return this.radius == circle.radius;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(radius);
+        final int prime = 37;
+        int hash = 1;
+        hash = prime * hash + Double.hashCode(radius);
+        return hash;
     }
 }

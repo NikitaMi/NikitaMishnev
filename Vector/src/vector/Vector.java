@@ -7,45 +7,35 @@ public class Vector {
     private double[] components;
 
     public Vector(int n) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Недопустимое значение размерности");
+        }
+
         this.n = n;
         this.components = new double[n];
-        //TODO БРОСИТЬ ИСКЛЮЧЕНИЕ
     }
 
     public Vector(Vector vector) {
         this.n = vector.n;
-        this.components = vector.components;
+        this.components = Arrays.copyOf(vector.components, vector.n);
     }
 
     public Vector(double[] components) {
-        this.components = components;
         n = components.length;
+        this.components = Arrays.copyOf(components, n);
     }
 
     public Vector(int n, double[] components) {
-        //TODO ПЕРЕДЕЛАТЬ КОНСТРУКТОР
+        if (n <= 0) {
+            throw new IllegalArgumentException("Недопустимое значение размерности");
+        }
+
         this.n = n;
-        components = new double[n];
-        this.components = components;
-        //TODO БРОСИТЬ ИСКЛЮЧЕНИЕ
+        this.components = Arrays.copyOf(components, n);
     }
 
     public int getSize() {
         return n;
-    }
-
-    public void setSize(int n) {
-        this.n = n;
-        //TODO БРОСИТЬ ИСКЛЮЧЕНИЕ
-    }
-
-    public double[] getComponents() {
-        return components;
-    }
-
-    public void setComponents(double[] components) {
-        this.components = components;
-        //TODO БРОСИТЬ ИСКЛЮЧЕНИЕ
     }
 
     @Override
@@ -61,25 +51,26 @@ public class Vector {
         }
     }
 
-    public boolean isBigger(Vector vector) {
+    private boolean isBigger(Vector vector) {
         int vector1Size = this.components.length;
         int vector2Size = vector.components.length;
 
         return vector1Size >= vector2Size;
     }
 
+    private void fillMinVector(Vector vector1) {
+        if (this.getSize() != vector1.getSize()) {
+            int vector1Size = this.components.length;
+            int vector2Size = vector1.components.length;
 
-    public void fillMinVector(Vector vector1) {
-        int vector1Size = this.components.length;
-        int vector2Size = vector1.components.length;
-
-        if (this.isBigger(vector1)) {
-            vector1.setSize(vector1Size);
-            vector1.setComponents(Arrays.copyOf(vector1.components, vector1Size));
-            return;
+            if (this.isBigger(vector1)) {
+                vector1.n = vector1Size;
+                vector1.components = Arrays.copyOf(vector1.components, vector1Size);
+                return;
+            }
+            this.n = vector2Size;
+            this.components = Arrays.copyOf(this.components, vector2Size);
         }
-        this.setSize(vector2Size);
-        this.setComponents(Arrays.copyOf(this.components, vector2Size));
     }
 
     public void addVector(Vector vector) {
@@ -125,6 +116,27 @@ public class Vector {
 
     public void setComponentByIndex(int index, double component) {
         this.components[index] = component;
+    }
+
+    public static Vector addVectors(Vector vector1, Vector vector2) {
+        vector1.addVector(vector2);
+        return vector1;
+    }
+
+    public static Vector subtractVectors(Vector vector1, Vector vector2) {
+        vector1.subtractVector(vector2);
+        return vector1;
+    }
+
+    public static double getScalar(Vector vector1, Vector vector2) {
+        vector1.fillMinVector(vector2);
+        double scalar = 0;
+
+        for (int i = 0; i < vector1.components.length; i++) {
+            scalar += vector1.components[i] * vector2.components[i];
+        }
+
+        return scalar;
     }
 
     @Override

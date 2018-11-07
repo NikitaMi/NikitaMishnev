@@ -1,10 +1,10 @@
 package ru.nikita.mishnev.shapes.main;
 
-import ru.nikita.mishnev.shapes.Circle;
+import ru.nikita.mishnev.shapes.figures.Circle;
 import ru.nikita.mishnev.shapes.interfaces.Shape;
-import ru.nikita.mishnev.shapes.Rectangle;
-import ru.nikita.mishnev.shapes.Square;
-import ru.nikita.mishnev.shapes.Triangle;
+import ru.nikita.mishnev.shapes.figures.Rectangle;
+import ru.nikita.mishnev.shapes.figures.Square;
+import ru.nikita.mishnev.shapes.figures.Triangle;
 import ru.nikita.mishnev.shapes.comparators.ShapeAreaComparator;
 import ru.nikita.mishnev.shapes.comparators.ShapePerimeterComparator;
 
@@ -34,12 +34,17 @@ public class Main {
         Shape[] shapes1 = {square1, triangle1, square2, rectangle1, rectangle2, circle1};
         int numberByArea = 1;
 
-        System.out.println(getShapeByArea(shapes1, numberByArea));
+        Shape biggestFigure = getShapeByArea(shapes1, numberByArea);
+        System.out.println(biggestFigure);
+        System.out.println("Площадь = " + biggestFigure.getArea());
         System.out.println();
 
         Shape[] shapes2 = {square1, square2, rectangle1, rectangle2, circle1};
         int numberByPerimeter = 2;
 
-        System.out.println(getShapeByPerimeter(shapes2, numberByPerimeter));
+        Shape secondFigureByPerimeter = getShapeByPerimeter(shapes2, numberByPerimeter);
+        System.out.println(secondFigureByPerimeter);
+        System.out.println("Периметр = " + secondFigureByPerimeter.getPerimeter());
+
     }
 }
